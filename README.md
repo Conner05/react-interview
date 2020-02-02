@@ -1,4 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## TO DO
+1. Fix the `addPerson` method to add a person to the table of people
+2. Add functionality to display the average age
+3. Add functionality to display the male and female percentages
+4. **BONUS** Add functionality under STATS to display a list of only adults
 
 ## Available Scripts
 
