@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import './App.css';
 import getAllPeople from './people.service';
-
-interface Person {
-  firstName: string;
-  lastName: string;
-  age: number | string;
-  gender: string;
-}
+import { Person } from './person.model';
 
 const App = () => {
-  let people = getAllPeople();
+  const [people, setPeople] = useState(getAllPeople());
   const emptyPerson: Person = { firstName: '', lastName: '', age: '', gender: '' };
   const [person, setPerson] = useState<Person>(emptyPerson);
+  const averageAge: number = Math.round(people.map(p => Number(p.age)).reduce((prev, curr) => prev + curr) / people.length);
+  const adults: string[] = people.filter(p => p.age >= 18).map(p => `${p.firstName} ${p.lastName}`);
 
   const updatePerson = (field: string, value: string): void => {
     setPerson({ ...person, [field]: value });
@@ -24,6 +20,11 @@ const App = () => {
   **********************************************************************/
   const addPerson = () => {
     setPerson(emptyPerson);
+    setPeople(people.concat(person))
+  }
+
+  const genderPercentage = (gender: string, people: Person[]): string => {
+    return (people.filter(p => p.gender === gender).length / people.length * 100).toFixed(2) + "%";
   }
 
   return (
@@ -57,22 +58,26 @@ const App = () => {
               2) Add functionality to display the average age
             **********************************************************************/}
             <div className="column">Average age:</div>
-            <div className="column"></div>
+            <div className="column">{averageAge}</div>
           </div>
           <div className="row">
             {/***********************************************************************
               3) Add functionality to display the male and female percentages
             **********************************************************************/}
             <div className="column">% Male:</div>
-            <div className="column"></div>
+            <div className="column">{genderPercentage("Male", people)}</div>
           </div>
           <div className="row">
             <div className="column">% Female:</div>
-            <div className="column"></div>
+            <div className="column">{genderPercentage("Female", people)}</div>
           </div>
           {/***********************************************************************
             4) **BONUS** Add functionality under STATS to display a list of only adults
           **********************************************************************/}
+          <div className="row">
+            <div className="column">Adults:</div>
+            <div className="column">{adults.join(', ')}</div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,9 +1,4 @@
-interface Person {
-  firstName: string;
-  lastName: string;
-  age: number | string;
-  gender: string;
-}
+import { Person } from "./person.model";
 
 export default function getAllPeople(): Person[] {
   return [
